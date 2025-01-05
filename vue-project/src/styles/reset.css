@@ -10,6 +10,11 @@ body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
   margin: 0;
 }
 
+/* Below mine is written by me */
+body {
+  background-color: rgb(137, 132, 108);
+}
+
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
 ul[role="list"], ol[role="list"] {
   list-style: none;
