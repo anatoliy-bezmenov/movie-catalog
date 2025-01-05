@@ -19,14 +19,16 @@ export default {
   created() {
     this.loading = true;
     this.loading = false;
+    const token = getToken();
+    if (!token) {
+      this.$router.push('/login');
+    };
     this.loggedIn = false;
   },
   methods: {
     addMovie() {
       let movie = {};
-      console.log("movie Form", this.movieForm);
       const token = getToken();
-
       movie.name = this.movieForm.name;
       movie.year = this.movieForm.year;
       movie.genre = this.movieForm.genre;
@@ -36,8 +38,7 @@ export default {
       movie.imdbRating = this.movieForm.imdbRating;
       movie.image = this.movieForm.image;
       movie.description = this.movieForm.description;
-      console.log("movie ", movie);
-
+      
       createMovie(movie, token)
         .then((response) => {
           console.log("response: ", response);
@@ -162,7 +163,7 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+  margin-top: 50px;
 }
 
 .form-group {

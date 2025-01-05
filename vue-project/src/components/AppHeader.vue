@@ -2,12 +2,14 @@
 import { isLoggedIn, getUser } from '../services/authService';
 import { nextTick, ref } from 'vue';
 import { store } from '../store/store';
+import { getToken } from '../services/authService';
 
 export default {
-
+  
   inject: [
     'test'
     ],
+
 
   data() {
     return {
@@ -16,6 +18,7 @@ export default {
       loggedIn: false,
       renderComponent: true,
       logged: this.test,
+      token: getToken(),
     };
   },
   created() {
@@ -56,8 +59,8 @@ export default {
 
 <template>
   <div class="header-container">
-  <div >LoggedIn: {{isLogged1}}</div>
-  <div >Store: {{this.logged}}</div>
+  <!-- <div >LoggedIn: {{isLogged1}}</div> -->
+  <!-- <div >Store: {{this.logged}}</div> -->
   <div v-if="isLogged1">
   <span>
   <!-- <div>Greetings, {{username}}</div> -->
@@ -72,6 +75,8 @@ export default {
       <div class="link">Login</div>
     </router-link>
   </span>
+  </div>
+  <div v-if="!isLogged1">
   <span>
     <router-link to="/register">
       <div class="link">Register</div>
@@ -88,7 +93,7 @@ export default {
         <div class="link">Movies</div>
       </router-link>
     </span>
-     <span>
+     <span v-if="this.token">
       <router-link to="/movies/create">
         <div class="link">Add Movie</div>
       </router-link>
@@ -107,8 +112,6 @@ export default {
   display: flex;
   margin: auto;
   justify-content: center;
-  
-  margin-bottom: 20px;
   gap: 50px;
   background-color: beige;
 }

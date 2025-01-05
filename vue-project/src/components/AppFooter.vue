@@ -3,13 +3,15 @@
 </script>
 
 <template>
-  <h1>I am the footer</h1>
+  <p class="">Movie Catalog 2025</p>
 </template>
 
 <style scoped>
-h1 {
+p {
     text-align: center;
     margin-top: 50px;
     font-size: 30px;
+    background-color: #FFF;
+    color: black;
 }
 </style>

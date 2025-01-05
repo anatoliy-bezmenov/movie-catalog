@@ -2,7 +2,7 @@
 import useVuelidate from '@vuelidate/core';
 import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 import { register } from '../services/userService';
-import { setDataToStorage } from '../services/authService';
+import { setDataToStorage, getToken } from '../services/authService';
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 export default {
@@ -17,17 +17,18 @@ export default {
   created() {
     this.loading = true;
     this.loading = false;
+    const token = getToken();
+    if (token) {
+      this.$router.push('/movies');
+    };
     this.loggedIn = false;
   },
   methods: {
     registerUser() {
-      console.log(this.registerForm);
       this.email = this.registerForm.email;
       this.name = this.registerForm.name;
       this.password = this.registerForm.password;
       this.rePassword = this.registerForm.rePassword;
-      console.log(this.email, this.name, this.password, this.rePassword);
-      console.log('method register');
         register(this.email, this.name, this.password, this.rePassword)
         .then((response) => {
           if (this.registerForm.password != this.registerForm.rePassword) {
@@ -36,7 +37,6 @@ export default {
           };
           setDataToStorage(response);
           this.$router.push('/movies');
-          console.log("Register User ", response);
         })
         .catch((error) => {
             console.log("error ", error.message);
@@ -113,7 +113,7 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+  margin-top: 50px;
 }
 
 .form-group {

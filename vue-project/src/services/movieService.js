@@ -65,11 +65,9 @@ export const saveMovieById = async (id, movieData, token) => {
         Authorization: token,
     };
 
-    id = '6777f1fdc035afe20afd3d71';
-
     console.log('service ', id, movieData, token);
     const response = await axios.post(url + `/movies/${id}/update`, movieData,
-    { header: headerObject });
+    { headers: headerObject });
     return new Promise((resolve, reject) => {
         resolve(response.data);
     })

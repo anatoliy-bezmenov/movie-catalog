@@ -18,17 +18,15 @@ export default {
   },
   created() {
     this.loading = true;
-    // this.fetchMovies();
     const token = getToken();
     if (token) {
       this.$router.push('/movies');
-    }
+    };
     this.loading = false;
     this.loggedIn = false;
   },
   methods: {
     loginUser() {
-      console.log(this.loginForm);
       this.email = this.loginForm.email;
       this.password = this.loginForm.password;
       console.log(this.email, this.password);
@@ -36,10 +34,7 @@ export default {
         login(this.email, this.password)
         .then((response) => {
           setDataToStorage(response);
-          // location.reload();
           this.$router.push('/movies');
-          // this.$router.go();
-          console.log("Login User ", response);
         })
         .catch((error) => {
             console.log("error ", error.message);
@@ -94,7 +89,8 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+  margin-top: 50px;
+  margin-bottom: 310px;
 }
 
 .form-group {

@@ -110,13 +110,14 @@ export default {
               <router-link to="/movies">
                 <button class="button backToMovies">Back to Movies</button>
               </router-link>
-
+              <span v-if="this.token">
               <RouterLink :to="{ path: '/movies/' + movie._id + '/edit' }">
                 <button class="button editMovie">Edit Movie</button>
               </RouterLink>
-
+              </span>
+                <span v-if="this.token">
                 <button class="button deleteMovie" @click="deleteMovie()">Delete Movie</button>
-
+                </span>
             </div>
 
         </span>

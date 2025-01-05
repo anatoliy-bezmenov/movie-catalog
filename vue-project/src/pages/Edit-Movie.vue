@@ -3,7 +3,7 @@ import useVuelidate from '@vuelidate/core';
 import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 import { setDataToStorage } from '../services/authService';
 import { createMemoryHistory, createRouter } from 'vue-router';
-import { saveMovieById } from '../services/movieService';
+import { saveMovieById, getMovieById } from '../services/movieService';
 import { getToken } from '../services/authService';
 import { reactive } from "vue";
 
@@ -15,22 +15,28 @@ export default {
       movieForm: {},
       loggedIn: false,
       movie: {},
+      id: '',
+      token: '',
     };
   },
   created() {
     this.loading = true;
-    this.loading = false;
-    this.loggedIn = false;
-    console.log("movieeee ", this.movie);
-
+    this.id = this.$route.params.movieId
+    this.token = getToken();
+    if (!this.token) {
+      this.$router.push('/login');
+    };
+    getMovieById(this.id, this.token)
+    .then((data) => {
+      console.log("data test ", data);
+      this.movieForm = data;
+      this.loading = false;
+    });
   },
   methods: {
     editMovie() {
       let movie = {};
-      console.log("movie Form", this.movieForm);
       const token = getToken();
-      const id = '6777f1fdc035afe20afd3d71';
-
       movie.name = this.movieForm.name;
       movie.year = this.movieForm.year;
       movie.genre = this.movieForm.genre;
@@ -40,16 +46,23 @@ export default {
       movie.imdbRating = this.movieForm.imdbRating;
       movie.image = this.movieForm.image;
       movie.description = this.movieForm.description;
-      console.log("movie ", movie);
 
-      saveMovieById(id, movie, token)
+      saveMovieById(this.id, movie, this.token)
         .then((response) => {
-          console.log("response: ", response);
           this.$router.push('/movies');
         })
         .catch((error) => {
             console.log("error ", error.message);
         })
+    },
+    fetchMovie(id, token) {
+      getMovieById(id, token)
+      .then((response) => {
+        this.movie = response;
+      })
+      .catch((error) => {
+        this.errors.push(error.message);
+      })
     },
   },
 };
