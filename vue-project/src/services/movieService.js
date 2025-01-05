@@ -14,7 +14,7 @@ export const getMovies = async () => {
     })
 };
 
-export const getMovieById = async (id) => {
+export const getMovieByIdNoUser = async (id) => {
     const headerObject = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -26,13 +26,26 @@ export const getMovieById = async (id) => {
     })
 };
 
+export const getMovieById = async (id, token) => {
+    const headerObject = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: token,
+    };
+
+    const response = await axios.get(url + `/movies/${id}/details`, 
+    { headers: headerObject });
+    return new Promise((resolve, reject) => {
+        resolve(response.data);
+    })
+};
+
 export const deleteMovieById = async (id, token) =>{
     const headerObject = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: token,
     };
-    console.log("header object ", headerObject);
 
     const response = await axios.get(url + `/movies/${id}/delete`, { headers: headerObject });
     return new Promise((resolve, reject) => {
@@ -47,7 +60,6 @@ export const createMovie = async (movieData, token) => {
         Authorization: token,
     };
 
-    console.log("service ", movieData, token);
     const response = await axios.post(url + '/movies/create', movieData,
     { headers: headerObject });
     return new Promise((resolve, reject) => {
@@ -65,7 +77,6 @@ export const saveMovieById = async (id, movieData, token) => {
         Authorization: token,
     };
 
-    console.log('service ', id, movieData, token);
     const response = await axios.post(url + `/movies/${id}/update`, movieData,
     { headers: headerObject });
     return new Promise((resolve, reject) => {

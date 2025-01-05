@@ -3,7 +3,7 @@ import useVuelidate from '@vuelidate/core';
 import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 import { setDataToStorage } from '../services/authService';
 import { createMemoryHistory, createRouter } from 'vue-router';
-import { saveMovieById, getMovieById } from '../services/movieService';
+import { saveMovieById, getMovieByIdNoUser } from '../services/movieService';
 import { getToken } from '../services/authService';
 import { reactive } from "vue";
 
@@ -26,7 +26,7 @@ export default {
     if (!this.token) {
       this.$router.push('/login');
     };
-    getMovieById(this.id, this.token)
+    getMovieByIdNoUser(this.id, this.token)
     .then((data) => {
       console.log("data test ", data);
       this.movieForm = data;
@@ -56,7 +56,7 @@ export default {
         })
     },
     fetchMovie(id, token) {
-      getMovieById(id, token)
+      getMovieByIdNoUser(id, token)
       .then((response) => {
         this.movie = response;
       })

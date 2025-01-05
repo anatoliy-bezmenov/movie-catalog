@@ -38,10 +38,9 @@ export default {
       movie.imdbRating = this.movieForm.imdbRating;
       movie.image = this.movieForm.image;
       movie.description = this.movieForm.description;
-      
+
       createMovie(movie, token)
         .then((response) => {
-          console.log("response: ", response);
           this.$router.push('/movies');
         })
         .catch((error) => {

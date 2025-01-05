@@ -2,8 +2,8 @@
 <script>
 import axios from 'axios';
 import { createMemoryHistory, createRouter } from 'vue-router'
-import { getMovies, getMovieById, deleteMovieById } from '../services/movieService';
-import { getToken } from '../services/authService';
+import { getMovies, getMovieByIdNoUser, getMovieById, deleteMovieById } from '../services/movieService';
+import { getToken, getUser } from '../services/authService';
 
 export default {
   data() {
@@ -14,13 +14,17 @@ export default {
       movie: {},
       id: '',
       token: '',
+      user: '',
+      isOwner: false,
     };
   },
   created() {
     // console.log("params ", this.$route.params.movieId);
     this.id = this.$route.params.movieId
     this.token = getToken();
+    this.user = getUser();
     this.loading = true;
+    this.fetchMovies();
     this.fetchMovie(this.id, this.token);
     this.loading = false;
   },
@@ -39,14 +43,38 @@ export default {
         });
     },
     fetchMovie(id, token) {
-      getMovieById(id, token)
+      if (token) {
+      getMovieByIdNoUser(id, token)
       .then((response) => {
         this.movie = response;
-        console.log("response ", response);
+        let user = getUser();
+        let parsedUser = JSON.parse(user);
+        if (response.owner.email == parsedUser.email) {
+          console.log("user is owner");
+          this.isOwner = true;
+        };
       })
       .catch((error) => {
         this.errors.push(error.message);
       })
+    };
+
+    if (!token) {
+      getMovieById(id, token)
+      .then((response) => {
+        this.movie = response;
+        let user = getUser();
+        let parsedUser = JSON.parse(user);
+        if (response.owner.email == parsedUser.email) {
+          console.log("user is owner");
+          this.isOwner = true;
+        };
+      })
+      .catch((error) => {
+        this.errors.push(error.message)
+      })
+    };
+
     },
     deleteMovie() {
       console.log("token ", this.token, this.id);
@@ -111,12 +139,16 @@ export default {
                 <button class="button backToMovies">Back to Movies</button>
               </router-link>
               <span v-if="this.token">
+              <span v-if="this.isOwner">
               <RouterLink :to="{ path: '/movies/' + movie._id + '/edit' }">
                 <button class="button editMovie">Edit Movie</button>
               </RouterLink>
               </span>
+              </span>
                 <span v-if="this.token">
+                <span v-if="this.isOwner">
                 <button class="button deleteMovie" @click="deleteMovie()">Delete Movie</button>
+                </span>
                 </span>
             </div>
 

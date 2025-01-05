@@ -1,6 +1,6 @@
 
 <script>
-import { getMovies, getMovieById } from '../services/movieService';
+import { getMovies, getMovieByIdNoUser } from '../services/movieService';
 
 export default {
   data() {
