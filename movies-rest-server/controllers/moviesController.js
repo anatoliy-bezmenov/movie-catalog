@@ -63,8 +63,12 @@ router.get("/:moviesId/details", async (req, res) => {
 });
 
 router.get("/:moviesId/delete", isAuth , isMoviesOwner, async (req, res) => {
-  const movies = await moviesService.delete(req.params.moviesId);
-  res.json(movies);
+  try {
+    const movies = await moviesService.delete(req.params.moviesId);
+    res.json(movies); 
+  } catch (err) {
+    res.status(404).json({ error: getErrorMessage(err) });
+  }
 });
 
 async function isMoviesOwner(req, res, next) {

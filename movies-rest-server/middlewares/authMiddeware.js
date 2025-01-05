@@ -26,7 +26,7 @@ exports.authMiddleware = async (req, res, next) => {
 
 exports.isAuth = (req, res, next) => {
   if (!req.user) {
-    res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ error: "Unauthorized" });
   }
 
   next();
