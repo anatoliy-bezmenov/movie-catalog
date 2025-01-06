@@ -10,39 +10,62 @@ const router = useRouter();
 export default {
   data() {
     return {
-      loading: false,
-      errors: [],
-      loginForm: {},
-      loggedIn: false,
+       loginForm: {
+        email: "",
+        password: "",
+      },
+      errors: {
+        email: null,
+        password: null,
+      },
+      errorMessage: null,
     };
   },
   created() {
-    this.loading = true;
     const token = getToken();
     if (token) {
       this.$router.push('/movies');
     };
-    this.loading = false;
-    this.loggedIn = false;
+  },
+  computed: {
+    isFormInvalid() {
+      return !this.loginForm.email || !this.loginForm.password || this.errors.email || this.errors.password;
+    },
   },
   methods: {
     loginUser() {
       this.email = this.loginForm.email;
       this.password = this.loginForm.password;
-      console.log(this.email, this.password);
-      console.log('method login');
         login(this.email, this.password)
         .then((response) => {
           setDataToStorage(response);
+          console.log('login send');
+          this.$emit('receiveResponse');
           this.$router.push('/movies');
         })
         .catch((error) => {
             console.log("error ", error.message);
         })
+
     },
-    submit() {
-        console.log("Email:", this.email);
-        console.log("Password:", this.password);
+    validatePassword() {
+      if (!this.loginForm.password) {
+        this.errors.password = "Password is required.";
+      } else if (this.loginForm.password.length < 4) {
+        this.errors.password = "Password must be at least 4 characters long.";
+      } else {
+        this.errors.password = null;
+      }
+    },
+    validateEmail() {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!this.loginForm.email) {
+        this.errors.email = "Email is required.";
+      } else if (!emailRegex.test(this.loginForm.email)) {
+        this.errors.email = "Invalid email format.";
+      } else {
+        this.errors.email = null;
+      }
     },
   },
 };
@@ -62,8 +85,9 @@ export default {
           type="email"
           v-model="loginForm.email"
           placeholder="Enter your email"
-          required
+          @blur="validateEmail"
         />
+         <p v-if="errors.email" class="error">{{ errors.email }}</p>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
@@ -72,10 +96,11 @@ export default {
           type="password"
           v-model="loginForm.password"
           placeholder="Enter your password"
-          required
+          @blur="validatePassword"
         />
+        <p v-if="errors.password" class="error">{{ errors.password }}</p>
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" :disabled="isFormInvalid">Login</button>
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>

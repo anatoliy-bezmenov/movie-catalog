@@ -50,3 +50,7 @@ export const register = async (email, name, password, rePassword) => {
     })
   })
 };
+
+export const getUsers = () => {
+  const result = axios.get(url + ``)
+}

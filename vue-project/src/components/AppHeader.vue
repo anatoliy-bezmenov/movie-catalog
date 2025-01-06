@@ -6,47 +6,52 @@ import { getToken } from '../services/authService';
 
 export default {
   
-  inject: [
-    'test'
-    ],
-
-
   data() {
     return {
       loading: false,
       errors: [],
-      loggedIn: false,
+      loggedInVar: false,
       renderComponent: true,
-      logged: this.test,
       token: getToken(),
+      testVar: false,
     };
   },
   created() {
-    // this.loading = true;
-    // this.loading = false;
-    this.isLogged();
+    console.log(this.isLogged());
+    this.loggedInVar = this.isLogged();
+    console.log(this.loggedInVar);
+  },
+  beforeUpdate() {
+    // this.isLogged();
+    this.loggedInVar = this.isLogged();
   },
   updated() {
-    this.isLogged();
+    // this.isLogged();
+    this.loggedInVar = this.isLogged();
   },
-  computed: {
-    isLogged1() {
-      return isLoggedIn();
-    },
+  unmounted() {
+    this.loggedInVar = this.isLogged();
+  },
+  activated() {
+    this.loggedInVar = this.isLogged();
   },
   methods: {
-    async forceRerender() {
-      // Remove MyComponent from the DOM
-      this.renderComponent = false;
-            // Wait for the change to get flushed to the DOM
-      await nextTick();
-      // Add the component back in
-      this.renderComponent = true;
+    isLogged() {
+      return this.loggedInVar = isLoggedIn();
     },
-    async isLogged() {
-      this.loggedIn = isLoggedIn();
-      await nextTick()
-      return this.loggedIn;
+    test() {
+      console.log('test button logout');
+      this.testVar = true;
+      console.log(this.testVar);
+      this.$emit('testing')
+    },
+    test2() {
+      this.testVar = false;
+      this.$emit('testing')
+    },
+    receiveResponse(){
+      console.log('receive response');
+      this.testVar = true;
     },
     // get username() {
     //   let parsedUser = {name: ''};
@@ -58,10 +63,10 @@ export default {
 </script>
 
 <template>
+  <Status v-on:updateStatus="receiveResponse" />
+
   <div class="header-container">
-  <!-- <div >LoggedIn: {{isLogged1}}</div> -->
-  <!-- <div >Store: {{this.logged}}</div> -->
-  <div v-if="isLogged1">
+  <div>
   <span>
   <!-- <div>Greetings, {{username}}</div> -->
     <router-link to="/logout">
@@ -69,14 +74,25 @@ export default {
     </router-link>
   </span>
   </div>
-  <div v-if="!isLogged1">
+
+
+    <!-- <button @click="test">
+    Logout Test2
+    </button>
+    <div>{{ this.testVar }}</div>
+    <button @click="test2">
+    Hidden Button
+    </button> -->
+
+
+  <div>
   <span>
     <router-link to="/login">
       <div class="link">Login</div>
     </router-link>
   </span>
   </div>
-  <div v-if="!isLogged1">
+  <div v-if="this.testVar">
   <span>
     <router-link to="/register">
       <div class="link">Register</div>
@@ -89,9 +105,11 @@ export default {
       </router-link>
     </span>
     <span>
+    <button>
       <router-link to="/movies">
         <div class="link">Movies</div>
       </router-link>
+    </button>
     </span>
      <span v-if="this.token">
       <router-link to="/movies/create">

@@ -44,7 +44,7 @@ export default {
     },
     fetchMovie(id, token) {
       if (token) {
-      getMovieByIdNoUser(id, token)
+      getMovieById(id, token)
       .then((response) => {
         this.movie = response;
         let user = getUser();
@@ -60,15 +60,9 @@ export default {
     };
 
     if (!token) {
-      getMovieById(id, token)
+      getMovieByIdNoUser(id)
       .then((response) => {
         this.movie = response;
-        let user = getUser();
-        let parsedUser = JSON.parse(user);
-        if (response.owner.email == parsedUser.email) {
-          console.log("user is owner");
-          this.isOwner = true;
-        };
       })
       .catch((error) => {
         this.errors.push(error.message)
@@ -81,7 +75,6 @@ export default {
       deleteMovieById(this.id, this.token)
       .then((response) => {
         this.movie = {};
-        // fetchMovies();
         this.$router.push('/movies')
       })
       .catch((error) => {

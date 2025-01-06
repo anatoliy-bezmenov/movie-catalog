@@ -8,20 +8,26 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 export default {
   data() {
     return {
-      loading: false,
-      errors: [],
-      registerForm: {},
-      loggedIn: false,
+      registerForm: {
+        email: "",
+        name: "",
+        password: "",
+        rePassword: "",
+      },
+      errors: {
+        email: null,
+        name: null,
+        password: null,
+        rePassword: null,
+      },
+      errorMessage: null,
     };
   },
   created() {
-    this.loading = true;
-    this.loading = false;
     const token = getToken();
     if (token) {
       this.$router.push('/movies');
     };
-    this.loggedIn = false;
   },
   methods: {
     registerUser() {
@@ -42,11 +48,40 @@ export default {
             console.log("error ", error.message);
         })
     },
-    submit() {
-        console.log("Email:", this.email);
-        console.log("Name:", this.name);
-        console.log("Password:", this.password);
-        console.log("RePassword:", this.rePassword);
+    validatePassword() {
+      if (!this.registerForm.password) {
+        this.errors.password = "Password is required.";
+      } else if (this.registerForm.password.length < 4) {
+        this.errors.password = "Password must be at least 4 characters long.";
+      } else {
+        this.errors.password = null;
+      }
+    },
+    validateRePassword() {
+      if (this.registerForm.rePassword != this.registerForm.password) {
+        this.errors.rePassword = "Passwords must match.";
+      } else {
+        this.errors.rePassword = null;
+      }
+    },
+    validateEmail() {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!this.registerForm.email) {
+        this.errors.email = "Email is required.";
+      } else if (!emailRegex.test(this.registerForm.email)) {
+        this.errors.email = "Invalid email format.";
+      } else {
+        this.errors.email = null;
+      }
+    },
+    validateName() {
+      if (!this.registerForm.name) {
+        this.errors.name = "Name is required.";
+      } else if (this.registerForm.name.length < 5) {
+        this.errors.name = "Name must be at least 5 characters long.";
+      } else {
+        this.errors.name = null;
+      }
     },
   },
 };
@@ -66,8 +101,9 @@ export default {
           type="email"
           v-model="registerForm.email"
           placeholder="Enter your email"
-          required
+          @blur="validateEmail"
         />
+        <p v-if="errors.email" class="error">{{ errors.email }}</p>
       </div>
     <div class="form-group">
         <label for="name">Name:</label>
@@ -76,8 +112,9 @@ export default {
           type="text"
           v-model="registerForm.name"
           placeholder="Enter your name"
-          required
+          @blur="validateName"
         />
+        <p v-if="errors.name" class="error">{{ errors.name }}</p>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
@@ -86,8 +123,9 @@ export default {
           type="password"
           v-model="registerForm.password"
           placeholder="Enter your password"
-          required
+          @blur="validatePassword"
         />
+        <p v-if="errors.password" class="error">{{ errors.password }}</p>
       </div>
       <div class="form-group">
         <label for="rePassword">Repeat Password:</label>
@@ -96,8 +134,9 @@ export default {
           type="password"
           v-model="registerForm.rePassword"
           placeholder="Repeat your password"
-          required
+          @blur="validateRePassword"
         />
+        <p v-if="errors.rePassword" class="error">{{ errors.rePassword }}</p>
       </div>
       <button type="submit">Register</button>
     </form>
