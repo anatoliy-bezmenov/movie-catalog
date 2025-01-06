@@ -9,8 +9,8 @@ const moviesSchemma = new mongoose.Schema({
     year: {
         type: Number,
         required: true,
-        min: [1900, 'Minimum year should be 1950'],
-        max: [2024, 'Maximum year should be 2024'],
+        min: [1900, 'Minimum year should be 1900'],
+        max: [2025, 'Maximum year should be 2025'],
     },
     genre: {
         type: String,
