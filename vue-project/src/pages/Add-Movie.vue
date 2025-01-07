@@ -91,7 +91,7 @@ export default {
       } else if (this.movieForm.year > 2025) {
         this.errors.year = "Year cannot exceed 2025.";
       } else if (!isOnlyNumbers) {
-        this.errors.year = "Year must be a number."
+        this.errors.year = "Year must be a natural number."
       } else {
         this.errors.year = null;
       }
@@ -117,7 +117,7 @@ export default {
       } else if (this.movieForm.runtime > 600) {
         this.errors.runtime = "Runtime cannot exceed 600.";
       } else if (!isOnlyNumbers) {
-        this.errors.runtime = "Runtime must be a number."
+        this.errors.runtime = "Runtime must be a natural number."
       } else {
         this.errors.runtime = null;
       }
@@ -147,7 +147,7 @@ export default {
       }
     },
     validateRating() {
-      const isOnlyNumbers = /^\d+(\.\d+)?$/.test(this.movieForm.imdbRating);
+      const isOnlyNumbers = /^\d+(\.\d{1,2})?$/.test(this.movieForm.imdbRating);
       if (!this.movieForm.imdbRating) {
         this.errors.imdbRating = "Rating is required.";
       } else if (this.movieForm.imdbRating < 0) {
@@ -155,7 +155,7 @@ export default {
       } else if (this.movieForm.imdbRating > 10) {
         this.errors.imdbRating = "Rating cannot exceed 10.";
       } else if (!isOnlyNumbers) {
-        this.errors.imdbRating = "Rating must be a number."
+        this.errors.imdbRating = "Rating must be a number and have no more than 2 decimals."
       } else {
         this.errors.imdbRating = null;
       }
