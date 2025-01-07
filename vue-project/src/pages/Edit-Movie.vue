@@ -36,10 +36,10 @@ export default {
         image: null,
       },
       errorMessage: null,
+      isOwner: false,
     };
   },
   created() {
-    this.fetchMovie();
     this.id = this.$route.params.movieId;
     this.token = getToken();
     if (!this.token) {
@@ -51,7 +51,15 @@ export default {
     getMovieById(this.id, this.token)
     .then((data) => {
       this.movieForm = data;
-      this.loading = false;
+      let user = getUser();
+      if (user) {
+        let parsedUser = JSON.parse(user);
+        if (data.owner.email == parsedUser.email) {
+          this.isOwner = true;
+        } else {
+          this.$router.push('/movies');
+        }
+      }
     });
   },
   computed: {
@@ -82,32 +90,6 @@ export default {
         })
         .catch((error) => {
         })
-    },
-    fetchMovie(id, token) {
-      if (this.token) {
-      getMovieById(this.id, this.token)
-      .then((response) => {
-        this.movie = response;
-        let user = getUser();
-        let parsedUser = JSON.parse(user);
-        if (response.owner.email == parsedUser.email) {
-          this.$router.push('/movies');
-        };
-      })
-      .catch((error) => {
-        this.$router.push('/movies');
-      })
-    };
-
-    if (!this.token) {
-      getMovieByIdNoUser(this.id)
-      .then((response) => {
-        this.movie = response;
-      })
-      .catch((error) => {
-        this.$router.push('/movies');
-      })
-    };
     },
     resetForm() {
       this.movieForm.name = '';

@@ -24,7 +24,7 @@ export default {
     };
     this.user = getUser();
     this.fetchMovies();
-    this.fetchMovie(this.id, this.token);
+    this.fetchMovie(this.id, this?.token);
   },
   methods: {
     fetchMovies() {
