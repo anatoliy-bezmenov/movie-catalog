@@ -34,16 +34,6 @@ exports.delete = (moviesId) => {
   return Movies.findByIdAndDelete(moviesId);
 };
 
-// exports.delete = async (moviesId) => {
-//   const movie = await Movies.findById(moviesId);
-
-//   await User.findByIdAndUpdate(movie.owner, {
-//     $pull: { createdMovies: moviesId },
-//   });
-
-//   return Movies.findByIdAndDelete(moviesId);
-// };
-
 exports.search = (name) => {
   let query = {};
 

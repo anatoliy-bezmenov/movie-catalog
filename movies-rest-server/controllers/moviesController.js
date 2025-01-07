@@ -11,15 +11,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/create", isAuth, async (req, res) => {
-// router.post("/create", async (req, res) => {
-  console.log("movie create req body ", req.body)
   const movieData = req.body;
   try {
     if (!req.user) {
       throw new Error("Unauthorized");
     }
     await moviesService.create(req.user._id, movieData);
-    // await moviesService.create(req.user?._id, movieData);
     res.json(req.body);
   } catch (err) {
     res.status(404).json({ error: getErrorMessage(err) });

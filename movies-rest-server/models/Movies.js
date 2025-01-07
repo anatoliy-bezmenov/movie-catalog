@@ -15,7 +15,7 @@ const moviesSchemma = new mongoose.Schema({
     genre: {
         type: String,
         minLength: [1, 'Genre should be at least 1 character'],
-        required: true
+        required: true,
     },
     runtime: {
         type: Number,

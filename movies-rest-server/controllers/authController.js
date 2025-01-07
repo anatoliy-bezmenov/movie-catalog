@@ -4,10 +4,9 @@ const authService = require("../services/authService");
 
 const { getErrorMessage } = require('../utils/errorUtils');
 
-const { isAuth, isGuest } = require("../middlewares/authMiddeware");
+const { isGuest } = require("../middlewares/authMiddeware");
 
 router.post("/register", isGuest, async (req, res) => {
-  console.log("registered ", req.body)
   const userData = req.body;
 
   try {
@@ -24,7 +23,6 @@ router.post("/register", isGuest, async (req, res) => {
 });
 
 router.post("/login", isGuest, async (req, res) => {
-  console.log("logged in ", req.body)
   const { email, password } = req.body;
 
   try {
