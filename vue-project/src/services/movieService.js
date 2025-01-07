@@ -12,6 +12,9 @@ export const getMovies = async () => {
     return new Promise((resolve, reject) => {
         resolve(response.data);
     })
+    .catch((ex) => {
+        reject(ex);
+      })
 };
 
 export const getMovieByIdNoUser = async (id) => {
@@ -24,6 +27,9 @@ export const getMovieByIdNoUser = async (id) => {
     return new Promise((resolve, reject) => {
         resolve(response.data);
     })
+    .catch((ex) => {
+        reject(ex);
+      })
 };
 
 export const getMovieById = async (id, token) => {
@@ -38,6 +44,9 @@ export const getMovieById = async (id, token) => {
     return new Promise((resolve, reject) => {
         resolve(response.data);
     })
+    .catch((ex) => {
+        reject(ex);
+      })
 };
 
 export const deleteMovieById = async (id, token) =>{
@@ -51,6 +60,9 @@ export const deleteMovieById = async (id, token) =>{
     return new Promise((resolve, reject) => {
         resolve(response.data);
     })
+    .catch((ex) => {
+        reject(ex);
+      })
 };
 
 export const createMovie = async (movieData, token) => {
@@ -66,6 +78,7 @@ export const createMovie = async (movieData, token) => {
         resolve(response.data);
     })
     .catch((ex) => {
+        reject(ex);
       })
 };
 
@@ -82,6 +95,7 @@ export const saveMovieById = async (id, movieData, token) => {
         resolve(response.data);
     })
     .catch((ex) => {
+        reject(ex);
     })
 };
 

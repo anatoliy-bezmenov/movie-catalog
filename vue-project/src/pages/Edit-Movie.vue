@@ -337,6 +337,7 @@ h2 {
     display: flex;
     margin: auto;
     width: 200px;
+    margin-bottom: 20px;
 }
 
 label {

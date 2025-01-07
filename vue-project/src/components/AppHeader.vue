@@ -1,47 +1,16 @@
 <script>
-import { isLoggedIn, getUser } from '../services/authService';
-import { nextTick, ref } from 'vue';
+import { getUser } from '../services/authService';
 import { store } from '../store/store';
-import { getToken } from '../services/authService';
-// import { useMovieStore } from '../store/index';
 
 export default {
   
   data() {
     return {
-      loading: false,
-      errors: [],
-      loggedInVar: false,
-      renderComponent: true,
-      token: getToken(),
-      testVar: false,
     };
   },
   created() {
-    // const test = useMovieStore();
-    console.log('vuex ', this.$store.state.logged);
-    console.log(this.isLogged());
-    this.loggedInVar = this.isLogged();
-    console.log(this.loggedInVar);
   },
   methods: {
-    isLogged() {
-      return this.loggedInVar = isLoggedIn();
-    },
-    test() {
-      console.log('test button logout');
-      this.testVar = true;
-      console.log(this.testVar);
-      this.$emit('testing')
-    },
-    test2() {
-      this.testVar = false;
-      this.$emit('testing')
-    },
-    receiveResponse(){
-      console.log('receive response');
-      this.testVar = true;
-    },
     // get username() {
     //   let parsedUser = {name: ''};
     //   parsedUser = JSON.parse(getUser());

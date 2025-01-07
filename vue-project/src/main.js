@@ -3,7 +3,6 @@ import { createApp } from 'vue';
 import { createStore } from 'vuex';
 import App from './App.vue';
 import router from './config/router';
-// import { store } from './store/store';
 import './styles/reset.css';
 
 const store = createStore({
@@ -23,11 +22,9 @@ const store = createStore({
 
 const pinia = createPinia();
 const app = createApp(App);
-// app.use(pinia);
+
+app.use(pinia);
 app.use(store);
-
-app.provide('test', true);
-
 app.use(router);
 
 app.mount('#app');

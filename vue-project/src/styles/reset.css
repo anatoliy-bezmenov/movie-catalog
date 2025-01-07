@@ -10,9 +10,7 @@ body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
   margin: 0;
 }
 
-/* Below mine is written by me */
 body {
-  /* background-color: #f4f4f9; */
   background-color: #1c1c1e;
   color: #FFF;
 }

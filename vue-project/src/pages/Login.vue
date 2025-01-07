@@ -1,11 +1,6 @@
 <script>
-// import useVuelidate from '@vuelidate/core';
-// import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
-// import { createMemoryHistory, createRouter, useRouter } from 'vue-router'
 import { login } from '../services/userService';
 import { setDataToStorage, getToken } from '../services/authService';
-
-// const router = useRouter();
 
 export default {
   data() {

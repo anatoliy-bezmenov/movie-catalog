@@ -24,12 +24,4 @@ const router = createRouter({
     history: createWebHistory(),
 });
   
-router.beforeEach((to, from) => {
-    // console.log('Before the routing', to, from);
-});
-  
-router.afterEach((to, from) => {
-    // console.log('AFTER the routing', to, from);
-});
-  
 export default router;

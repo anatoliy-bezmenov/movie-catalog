@@ -310,7 +310,9 @@ export default {
 h2 {
     display: flex;
     margin: auto;
-    width: 100px;
+    width: 300px;
+    margin-left: 115px;
+    margin-bottom: 20px;
 }
 
 label {
