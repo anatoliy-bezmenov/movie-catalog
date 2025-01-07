@@ -2,7 +2,7 @@
 // import useVuelidate from '@vuelidate/core';
 // import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 // import { createMemoryHistory, createRouter } from 'vue-router'
-import { register } from '../services/userService';
+import { register} from '../services/userService';
 import { setDataToStorage, getToken } from '../services/authService';
 
 export default {
@@ -14,12 +14,14 @@ export default {
         name: "",
         password: "",
         rePassword: "",
+        credentials: '',
       },
       errors: {
         email: null,
         name: null,
         password: null,
         rePassword: null,
+        credentials: null,
       },
       errorMessage: null,
     };
@@ -29,6 +31,13 @@ export default {
     if (this.token) {
       this.$router.push('/movies');
     };
+  },
+  computed: {
+    isFormInvalid() {
+      return !this.registerForm.email || !this.registerForm.name ||
+      !this.registerForm.password || !this.registerForm.rePassword || this.errors.email
+      || this.errors.name || this.errors.password || this.errors.rePassword;
+    },
   },
   methods: {
     registerUser() {
@@ -46,6 +55,7 @@ export default {
           this.$router.push('/movies');
         })
         .catch((error) => {
+          this.errors.credentials = "Invalid email address.";
         })
     },
     validatePassword() {
@@ -101,6 +111,9 @@ export default {
           @blur="validateEmail"
         />
         <p v-if="errors.email" class="error">{{ errors.email }}</p>
+        <span v-if="!errors.email">
+        <p v-if="errors.credentials" class="error">{{ errors.credentials }}</p>
+        </span>
       </div>
     <div class="form-group">
         <label for="name">Name:</label>
@@ -135,13 +148,12 @@ export default {
         />
         <p v-if="errors.rePassword" class="error">{{ errors.rePassword }}</p>
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" :disabled="isFormInvalid">Register</button>
       <p class="login">Already have an account? <router-link to="/login">
       <span class="link">Log in</span>
     </router-link> right now!
       </p>
     </form>
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 </template>
 

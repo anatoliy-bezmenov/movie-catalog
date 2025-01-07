@@ -8,10 +8,12 @@ export default {
        loginForm: {
         email: "",
         password: "",
+        credentials: "",
       },
       errors: {
         email: null,
         password: null,
+        credentials: null,
       },
       errorMessage: null,
     };
@@ -39,14 +41,13 @@ export default {
           this.$router.push('/movies');
         })
         .catch((error) => {
+          this.errors.credentials = "The requested user could not be found.";
         })
 
     },
     validatePassword() {
       if (!this.loginForm.password) {
         this.errors.password = "Password is required.";
-      } else if (this.loginForm.password.length < 4) {
-        this.errors.password = "Password must be at least 4 characters long.";
       } else {
         this.errors.password = null;
       }
@@ -67,6 +68,7 @@ export default {
 
 <template>
   <div class="login-form">
+  <p v-if="errors.credentials" class="error">{{ errors.credentials }}</p>
     <h2>Login</h2>
     <form @submit.prevent="loginUser">
       <div class="form-group">
@@ -103,9 +105,9 @@ export default {
 
 <style scoped>
 .login-form {
-  max-width: 400px;
+  max-width: 450px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
