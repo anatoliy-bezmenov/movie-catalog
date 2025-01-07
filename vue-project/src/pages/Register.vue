@@ -1,13 +1,14 @@
 <script>
-import useVuelidate from '@vuelidate/core';
-import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+// import useVuelidate from '@vuelidate/core';
+// import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+// import { createMemoryHistory, createRouter } from 'vue-router'
 import { register } from '../services/userService';
 import { setDataToStorage, getToken } from '../services/authService';
-import { createMemoryHistory, createRouter } from 'vue-router'
 
 export default {
   data() {
     return {
+      token: '',
       registerForm: {
         email: "",
         name: "",
@@ -24,8 +25,8 @@ export default {
     };
   },
   created() {
-    const token = getToken();
-    if (token) {
+    this.token = getToken();
+    if (this.token) {
       this.$router.push('/movies');
     };
   },
@@ -38,14 +39,13 @@ export default {
         register(this.email, this.name, this.password, this.rePassword)
         .then((response) => {
           if (this.registerForm.password != this.registerForm.rePassword) {
-            console.log("Passwords not matching!");
             return;
           };
           setDataToStorage(response);
+          this.$store.state.logged = true;
           this.$router.push('/movies');
         })
         .catch((error) => {
-            console.log("error ", error.message);
         })
     },
     validatePassword() {
@@ -88,9 +88,6 @@ export default {
 </script>
 
 <template>
-  <span v-for="error in errors">
-    <div>{{error}}</div>
-  </span>
   <div class="register-form">
     <h2>Register</h2>
     <form @submit.prevent="registerUser">
@@ -139,6 +136,10 @@ export default {
         <p v-if="errors.rePassword" class="error">{{ errors.rePassword }}</p>
       </div>
       <button type="submit">Register</button>
+      <p class="login">Already have an account? <router-link to="/login">
+      <span class="link">Log in</span>
+    </router-link> right now!
+      </p>
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
@@ -157,6 +158,11 @@ export default {
 
 .form-group {
   margin-bottom: 15px;
+}
+
+.login {
+  font-size: 18px;
+  margin-left: 3px;
 }
 
 h2 {

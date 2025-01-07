@@ -1,6 +1,6 @@
-
 <script>
-import { getMovies, getMovieByIdNoUser } from '../services/movieService';
+import { getMovies } from '../services/movieService';
+import { getToken } from '../services/authService';
 
 export default {
   data() {
@@ -9,25 +9,25 @@ export default {
       loading: false,
       errors: [],
       movie: {},
+      token: getToken(),
     };
   },
   created() {
-    this.loading = true;
+    if (this.token) {
+      this.$store.state.logged = true;
+    } else {
+      this.$store.state.logged = false;
+    };
     this.fetchMovies();
-    this.loading = false;
   },
   methods: {
     fetchMovies() {
       getMovies()
         .then((response) => {
           this.movies = response;
-          console.log(response);
         })
         .catch((error) => {
-          console.error('Error fetching data:', error);
-          // error.message
           this.errors.push('Cannot fetch data');
-          console.log(this.errors);
         });
     },
   },
@@ -35,16 +35,11 @@ export default {
 </script>
 
 <template>
-  <span v-for="error in errors">
-    <div>{{error}}</div>
-  </span>
   <div class="grid">
         <span v-for="movie in movies">
-          <!-- <a [routerLink]="'/games/' + game._id + '/details'"> -->
             <span class="movie-container">
             <div class="name"><strong>{{ movie.name }}</strong></div>
             <div class="image-container">
-          <!-- <router-link to="/movies/:movieId/details"> -->
           <RouterLink :to="{ path: '/movies/' + movie._id + '/details' }">
             <img class="image" v-bind:src="movie.image">
           </RouterLink>
@@ -61,7 +56,6 @@ export default {
               Director: {{ movie.director }}
             </div>      
           </span>
-        <!-- </a> -->
         </span>
       </div>
 </template>
@@ -78,7 +72,6 @@ export default {
 }
 
 .name {
-  color: black;
   font-size: 30px;
   width: 200px;
   margin-left: 210px;

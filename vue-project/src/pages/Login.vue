@@ -1,11 +1,11 @@
 <script>
-import useVuelidate from '@vuelidate/core';
-import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+// import useVuelidate from '@vuelidate/core';
+// import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+// import { createMemoryHistory, createRouter, useRouter } from 'vue-router'
 import { login } from '../services/userService';
 import { setDataToStorage, getToken } from '../services/authService';
-import { createMemoryHistory, createRouter, useRouter } from 'vue-router'
 
-const router = useRouter();
+// const router = useRouter();
 
 export default {
   data() {
@@ -29,7 +29,8 @@ export default {
   },
   computed: {
     isFormInvalid() {
-      return !this.loginForm.email || !this.loginForm.password || this.errors.email || this.errors.password;
+      return !this.loginForm.email || !this.loginForm.password || this.errors.email
+      || this.errors.password;
     },
   },
   methods: {
@@ -39,12 +40,10 @@ export default {
         login(this.email, this.password)
         .then((response) => {
           setDataToStorage(response);
-          console.log('login send');
-          this.$emit('receiveResponse');
+          this.$store.state.logged = true;
           this.$router.push('/movies');
         })
         .catch((error) => {
-            console.log("error ", error.message);
         })
 
     },
@@ -72,9 +71,6 @@ export default {
 </script>
 
 <template>
-  <span v-for="error in errors">
-    <div>{{error}}</div>
-  </span>
   <div class="login-form">
     <h2>Login</h2>
     <form @submit.prevent="loginUser">
@@ -101,6 +97,10 @@ export default {
         <p v-if="errors.password" class="error">{{ errors.password }}</p>
       </div>
       <button type="submit" :disabled="isFormInvalid">Login</button>
+      <p class="signup">Don't have an account? <router-link to="/register">
+      <span class="link">Sign up</span>
+    </router-link> right now!
+      </p>
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
@@ -120,6 +120,11 @@ export default {
 
 .form-group {
   margin-bottom: 15px;
+}
+
+.signup {
+  font-size: 18px;
+  margin-left: 3px;
 }
 
 h2 {

@@ -1,41 +1,26 @@
 <script>
-import { removeToken } from '../services/authService';
-import { createMemoryHistory, createRouter } from 'vue-router'
-import { nextTick, ref } from 'vue';
-
+import { removeToken, getToken } from '../services/authService';
 export default {
 
-  inject: [
-    'test'
-    ],
 
   data() {
     return {
-      loading: false,
-      errors: [],
-      logged: this.test,
+      token: getToken(),
     };
   },
-  async created() {
-    this.loading = true;
-    console.log('method logout');
+  created() {
+    if (!this.token) {
+      this.$router.push('/movies');
+    };
     removeToken();
-    this.logged = false;
-    await nextTick();
-    // this.$router.push('/movies');
-    this.loading = false;
+    this.$store.state.logged = false;
   },
   methods: {
-    loginUser() {
-    },
   },
 };
 </script>
 
 <template>
-  <span v-for="error in errors">
-    <div>{{error}}</div>
-  </span>
     <h1>Successfully logged out</h1>
     <p>Go to
     <router-link to="/movies">

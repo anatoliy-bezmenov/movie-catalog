@@ -66,7 +66,6 @@ export const createMovie = async (movieData, token) => {
         resolve(response.data);
     })
     .catch((ex) => {
-        console.log('456 createMovie', ex.message);
       })
 };
 
@@ -83,7 +82,6 @@ export const saveMovieById = async (id, movieData, token) => {
         resolve(response.data);
     })
     .catch((ex) => {
-        console.log('456 saveMovieById ', ex.message);
     })
 };
 

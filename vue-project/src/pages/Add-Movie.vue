@@ -1,6 +1,6 @@
 <script>
 import useVuelidate from '@vuelidate/core';
-import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+// import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 import { setDataToStorage } from '../services/authService';
 import { createMemoryHistory, createRouter } from 'vue-router';
 import { createMovie } from '../services/movieService';
@@ -9,9 +9,8 @@ import { getToken } from '../services/authService';
 export default {
   data() {
     return {
-      // errors: [],
-      // movieForm: {},
       movie: {},
+      token: getToken(),
       movieForm: {
         name: "",
         year: "",
@@ -38,11 +37,12 @@ export default {
     };
   },
   created() {
-    const token = getToken();
-    if (!token) {
+    if (!this.token) {
+      this.$store.state.logged = false;
       this.$router.push('/login');
+    } else {
+      this.$store.state.logged = true;
     };
-    this.loggedIn = false;
   },
   computed: {
     isFormInvalid() {
@@ -56,24 +56,21 @@ export default {
   },
   methods: {
     addMovie() {
-      let movie = {};
-      const token = getToken();
-      movie.name = this.movieForm.name;
-      movie.year = this.movieForm.year;
-      movie.genre = this.movieForm.genre;
-      movie.runtime = this.movieForm.runtime;
-      movie.director = this.movieForm.director;
-      movie.country = this.movieForm.country;
-      movie.imdbRating = this.movieForm.imdbRating;
-      movie.image = this.movieForm.image;
-      movie.description = this.movieForm.description;
+      this.movie.name = this.movieForm.name;
+      this.movie.year = this.movieForm.year;
+      this.movie.genre = this.movieForm.genre;
+      this.movie.runtime = this.movieForm.runtime;
+      this.movie.director = this.movieForm.director;
+      this.movie.country = this.movieForm.country;
+      this.movie.imdbRating = this.movieForm.imdbRating;
+      this.movie.image = this.movieForm.image;
+      this.movie.description = this.movieForm.description;
 
-      createMovie(movie, token)
+      createMovie(this.movie, this.token)
         .then((response) => {
           this.$router.push('/movies');
         })
         .catch((error) => {
-            console.log("error ", error.message);
         })
     },
     validateName() {
@@ -86,66 +83,78 @@ export default {
       }
     },
     validateYear() {
+      const isOnlyNumbers = /^\d+$/.test(this.movieForm.year);
       if (!this.movieForm.year) {
         this.errors.year = "Year is required.";
       } else if (this.movieForm.year < 1900) {
         this.errors.year = "Year must be at least 1900.";
       } else if (this.movieForm.year > 2025) {
         this.errors.year = "Year cannot exceed 2025.";
-      } else if (isNaN(this.movieForm.year) && isNaN(parseFloat(this.movieForm.year))) {
+      } else if (!isOnlyNumbers) {
         this.errors.year = "Year must be a number."
       } else {
         this.errors.year = null;
       }
     },
     validateGenre() {
+      const containsNumbers = /\d/.test(this.movieForm.genre);
       if (!this.movieForm.genre) {
         this.errors.genre = "Genre is required.";
       } else if (this.movieForm.genre.length < 1) {
         this.errors.genre = "Genre must be at least 1 character.";
+      } else if (containsNumbers) {
+        this.errors.genre = "Genre cannot contain numbers.";
       } else {
         this.errors.genre = null;
       }
     },
     validateRuntime() {
+      const isOnlyNumbers = /^\d+$/.test(this.movieForm.runtime);
       if (!this.movieForm.runtime) {
         this.errors.runtime = "Runtime is required.";
       } else if (this.movieForm.runtime < 1) {
         this.errors.runtime = "Runtime must be at least 1.";
       } else if (this.movieForm.runtime > 600) {
         this.errors.runtime = "Runtime cannot exceed 600.";
-      } else if (isNaN(this.movieForm.runtime) && isNaN(parseFloat(this.movieForm.runtime))) {
+      } else if (!isOnlyNumbers) {
         this.errors.runtime = "Runtime must be a number."
       } else {
         this.errors.runtime = null;
       }
     },
     validateDirector() {
+      const containsNumbers = /\d/.test(this.movieForm.director);
       if (!this.movieForm.director) {
         this.errors.director = "Director is required.";
       } else if (this.movieForm.director.length < 1) {
         this.errors.director = "Director must be at least 1 character.";
+      } else if (containsNumbers) {
+        this.errors.director = "Director cannot contain numbers.";
       } else {
         this.errors.director = null;
       }
     },
     validateCountry() {
+      const containsNumbers = /\d/.test(this.movieForm.country);
       if (!this.movieForm.country) {
         this.errors.country = "Country is required.";
       } else if (this.movieForm.country.length < 1) {
         this.errors.country = "Country must be at least 1 character.";
+      } else if (containsNumbers) {
+        this.errors.country = "Country cannot contain numbers.";
       } else {
         this.errors.country = null;
       }
     },
     validateRating() {
+      const isOnlyNumbers = /^\d+(\.\d+)?$/.test(this.movieForm.imdbRating);
       if (!this.movieForm.imdbRating) {
         this.errors.imdbRating = "Rating is required.";
       } else if (this.movieForm.imdbRating < 0) {
         this.errors.imdbRating = "Rating must be at least 0.";
       } else if (this.movieForm.imdbRating > 10) {
         this.errors.imdbRating = "Rating cannot exceed 10.";
-      } else if (isNaN(this.movieForm.imdbRating) && isNaN(parseFloat(this.movieForm.imdbRating))) {
+      } else if (!isOnlyNumbers) {
         this.errors.imdbRating = "Rating must be a number."
       } else {
         this.errors.imdbRating = null;
@@ -175,9 +184,6 @@ export default {
 </script>
 
 <template>
-  <span v-for="error in errors">
-    <div>{{error}}</div>
-  </span>
   <div class="movie-form">
     <h2>Create Movie</h2>
     <form @submit.prevent="addMovie">

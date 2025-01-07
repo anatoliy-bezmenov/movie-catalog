@@ -1,7 +1,4 @@
-
 <script>
-import axios from 'axios';
-import { createMemoryHistory, createRouter } from 'vue-router'
 import { getMovies, getMovieByIdNoUser, getMovieById, deleteMovieById } from '../services/movieService';
 import { getToken, getUser } from '../services/authService';
 
@@ -9,7 +6,6 @@ export default {
   data() {
     return {
       movies: [],
-      loading: false,
       errors: [],
       movie: {},
       id: '',
@@ -19,27 +15,25 @@ export default {
     };
   },
   created() {
-    // console.log("params ", this.$route.params.movieId);
     this.id = this.$route.params.movieId
     this.token = getToken();
+    if (!this.token) {
+      this.$store.state.logged = false;
+    } else {
+      this.$store.state.logged = true;
+    };
     this.user = getUser();
-    this.loading = true;
     this.fetchMovies();
     this.fetchMovie(this.id, this.token);
-    this.loading = false;
   },
   methods: {
     fetchMovies() {
       getMovies()
         .then((response) => {
           this.movies = response;
-          console.log(response);
         })
         .catch((error) => {
-          console.error('Error fetching data:', error);
-          // error.message
           this.errors.push('Cannot fetch data');
-          console.log(this.errors);
         });
     },
     fetchMovie(id, token) {
@@ -50,7 +44,6 @@ export default {
         let user = getUser();
         let parsedUser = JSON.parse(user);
         if (response.owner.email == parsedUser.email) {
-          console.log("user is owner");
           this.isOwner = true;
         };
       })
@@ -68,10 +61,9 @@ export default {
         this.errors.push(error.message)
       })
     };
-
     },
+    
     deleteMovie() {
-      console.log("token ", this.token, this.id);
       deleteMovieById(this.id, this.token)
       .then((response) => {
         this.movie = {};
@@ -86,17 +78,10 @@ export default {
 </script>
 
 <template>
-  <span v-for="error in errors">
-    <div>{{error}}</div>
-  </span>
-          <!-- <a [routerLink]="'/games/' + game._id + '/details'"> -->
           <span class="movie-container">
             <div class="name"><strong>{{ movie.name }}</strong></div>
             <div class="image-container">
-          <!-- <router-link to="/movies/:movieId/details"> -->
-          <router-link to="/movies/6766b72d8094d8a092a48737/details">
             <img class="image" v-bind:src="movie.image">
-          </router-link>
             </div>
 
             <div class="double-row">
@@ -152,12 +137,12 @@ export default {
 .name {
   display: inline-block;
   width: 300px;
-  color: black;
   font-size: 45px;
   margin-left: 260px;
   line-height: 40px;
   text-align: center;
   margin-bottom: 15px;
+  margin-top: 20px;
 }
 
 .image {

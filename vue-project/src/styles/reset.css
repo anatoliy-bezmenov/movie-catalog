@@ -12,7 +12,9 @@ body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
 
 /* Below mine is written by me */
 body {
-  background-color: rgb(137, 132, 108);
+  /* background-color: #f4f4f9; */
+  background-color: #1c1c1e;
+  color: #FFF;
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */

@@ -3,6 +3,7 @@ import { isLoggedIn, getUser } from '../services/authService';
 import { nextTick, ref } from 'vue';
 import { store } from '../store/store';
 import { getToken } from '../services/authService';
+// import { useMovieStore } from '../store/index';
 
 export default {
   
@@ -17,23 +18,11 @@ export default {
     };
   },
   created() {
+    // const test = useMovieStore();
+    console.log('vuex ', this.$store.state.logged);
     console.log(this.isLogged());
     this.loggedInVar = this.isLogged();
     console.log(this.loggedInVar);
-  },
-  beforeUpdate() {
-    // this.isLogged();
-    this.loggedInVar = this.isLogged();
-  },
-  updated() {
-    // this.isLogged();
-    this.loggedInVar = this.isLogged();
-  },
-  unmounted() {
-    this.loggedInVar = this.isLogged();
-  },
-  activated() {
-    this.loggedInVar = this.isLogged();
   },
   methods: {
     isLogged() {
@@ -63,10 +52,8 @@ export default {
 </script>
 
 <template>
-  <Status v-on:updateStatus="receiveResponse" />
-
   <div class="header-container">
-  <div>
+  <div v-if="this.$store.state.logged">
   <span>
   <!-- <div>Greetings, {{username}}</div> -->
     <router-link to="/logout">
@@ -75,24 +62,14 @@ export default {
   </span>
   </div>
 
-
-    <!-- <button @click="test">
-    Logout Test2
-    </button>
-    <div>{{ this.testVar }}</div>
-    <button @click="test2">
-    Hidden Button
-    </button> -->
-
-
-  <div>
+  <div v-if="!this.$store.state.logged">
   <span>
     <router-link to="/login">
       <div class="link">Login</div>
     </router-link>
   </span>
   </div>
-  <div v-if="this.testVar">
+  <div v-if="!this.$store.state.logged">
   <span>
     <router-link to="/register">
       <div class="link">Register</div>
@@ -105,13 +82,11 @@ export default {
       </router-link>
     </span>
     <span>
-    <button>
       <router-link to="/movies">
         <div class="link">Movies</div>
       </router-link>
-    </button>
     </span>
-     <span v-if="this.token">
+     <span v-if="this.$store.state.logged">
       <router-link to="/movies/create">
         <div class="link">Add Movie</div>
       </router-link>
@@ -132,16 +107,21 @@ export default {
   justify-content: center;
   gap: 50px;
   background-color: beige;
+  margin-top: -5px;
+  background-color: #E74C3C;
+  background-image: linear-gradient(#E74C3C, #1C1C1E);
+  height: 100px;
 }
 
 .header-container > span, .header-container > div {
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .link {
   font-size: 25px;
-  color: black;
+  color: #FFF;
 }
 </style>
