@@ -5,7 +5,7 @@ import useVuelidate from '@vuelidate/core';
 // import { setDataToStorage } from '../services/authService';
 import { createMemoryHistory, createRouter } from 'vue-router';
 import { getMovieById, saveMovieById, getMovieByIdNoUser } from '../services/movieService';
-import { getToken } from '../services/authService';
+import { getToken, getUser } from '../services/authService';
 
 export default {
   data() {
@@ -39,6 +39,7 @@ export default {
     };
   },
   created() {
+    this.fetchMovie();
     this.id = this.$route.params.movieId;
     this.token = getToken();
     if (!this.token) {
@@ -81,6 +82,32 @@ export default {
         })
         .catch((error) => {
         })
+    },
+    fetchMovie(id, token) {
+      if (this.token) {
+      getMovieById(this.id, this.token)
+      .then((response) => {
+        this.movie = response;
+        let user = getUser();
+        let parsedUser = JSON.parse(user);
+        if (response.owner.email == parsedUser.email) {
+          this.$router.push('/movies');
+        };
+      })
+      .catch((error) => {
+        this.$router.push('/movies');
+      })
+    };
+
+    if (!this.token) {
+      getMovieByIdNoUser(this.id)
+      .then((response) => {
+        this.movie = response;
+      })
+      .catch((error) => {
+        this.$router.push('/movies');
+      })
+    };
     },
     resetForm() {
       this.movieForm.name = '';
