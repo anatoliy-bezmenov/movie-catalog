@@ -88,9 +88,16 @@ export default {
   margin-left: 140px;
 }
 
+.search-button:hover {
+  color: black;
+  background-color: orange;
+}
+
+
 .search-title {
   margin-left: 95px;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 .link {
