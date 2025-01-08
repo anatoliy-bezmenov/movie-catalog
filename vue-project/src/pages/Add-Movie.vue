@@ -321,6 +321,10 @@ label {
   font-weight: bold;
 }
 
+h2, label {
+  color: #fff;
+}
+
 input {
   width: 100%;
   padding: 8px;

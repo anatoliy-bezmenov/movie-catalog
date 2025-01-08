@@ -93,7 +93,7 @@ export default {
         />
         <p v-if="errors.password" class="error">{{ errors.password }}</p>
       </div>
-      <button type="submit" :disabled="isFormInvalid">Login</button>
+      <button class="login-button" type="submit" :disabled="isFormInvalid">Login</button>
       <p class="signup">Don't have an account? <router-link to="/register">
       <span class="link">Sign up</span>
     </router-link> right now!
@@ -157,6 +157,23 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+h2, label, p {
+  color: #fff;
+}
+
+.login-button:hover {
+  background-color: #FF8C00;
+  color: black;
+}
+
+.link:hover {
+  color: orange;
+}
+
+.link {
+  color: #0099FF;
 }
 
 .error {

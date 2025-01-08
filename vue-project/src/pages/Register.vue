@@ -148,7 +148,7 @@ export default {
         />
         <p v-if="errors.rePassword" class="error">{{ errors.rePassword }}</p>
       </div>
-      <button type="submit" :disabled="isFormInvalid">Register</button>
+      <button class="register-button" type="submit" :disabled="isFormInvalid">Register</button>
       <p class="login">Already have an account? <router-link to="/login">
       <span class="link">Log in</span>
     </router-link> right now!
@@ -181,6 +181,23 @@ h2 {
     display: flex;
     margin: auto;
     width: 100px;
+}
+
+h2, label, p {
+  color: #fff;
+}
+
+.register-button:hover {
+  background-color: #FF8C00;
+  color: black;
+}
+
+.link:hover {
+  color: orange;
+}
+
+.link {
+  color: #0099FF;
 }
 
 label {

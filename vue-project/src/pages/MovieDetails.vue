@@ -112,6 +112,9 @@ export default {
             </div>
             <div class="description">{{movie.description}}</div>
 
+          <div v-if="this.token">
+            <div v-if="this.isOwner">
+
             <div class="buttons">
               <router-link to="/movies">
                 <button class="button backToMovies">Back to Movies</button>
@@ -128,6 +131,26 @@ export default {
                 <button class="button deleteMovie" @click="deleteMovie()">Delete Movie</button>
                 </span>
                 </span>
+            </div>
+
+            </div>
+            
+            <div v-else>
+            <div class="button-big">
+            <router-link to="/movies">
+                <button class="button backToMovies">Back to Movies</button>
+              </router-link>
+              </div>
+            </div>
+
+          </div>
+
+          <div v-else>
+            <div class="button-big">
+            <router-link to="/movies">
+                <button class="button backToMovies">Back to Movies</button>
+              </router-link>
+              </div>
             </div>
 
         </span>
@@ -183,6 +206,11 @@ export default {
 .button {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.button-big {
+  margin-left: 300px;
+  margin-top: 20px;
 }
 
 .deleteMovie {
