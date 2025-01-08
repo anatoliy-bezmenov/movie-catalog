@@ -1,5 +1,5 @@
 <script>
-import { getMovies } from '../services/movieService';
+import { getMovies, searchMovie } from '../services/movieService';
 import { getToken } from '../services/authService';
 
 export default {
@@ -10,6 +10,8 @@ export default {
       errors: [],
       movie: {},
       token: getToken(),
+      movieName: '',
+      inputValue: "",
     };
   },
   created() {
@@ -30,32 +32,34 @@ export default {
           this.errors.push('Cannot fetch data');
         });
     },
+    fetchGameByName() {
+      searchMovie(this.movieName)
+      .then((response) => {
+        this.movies = response;
+      })
+    },
   },
 };
 </script>
 
 <template>
-  <div class="grid">
-  <h1>Search Movies</h1>
+<div class="search-container">
+  <h1 class="search-title">Search by name</h1>
+    <input v-model="movieName" @keyup.enter="fetchGameByName()" type="text" :min="1" :max="30" />
+    <button class="search-button" @click="fetchGameByName()">Search</button>
+</div>
+    <div class="grid">
         <span v-for="movie in movies">
             <span class="movie-container">
-            <div class="name"><strong>{{ movie.name }}</strong></div>
             <div class="image-container">
           <RouterLink :to="{ path: '/movies/' + movie._id + '/details' }">
             <img class="image" v-bind:src="movie.image">
           </RouterLink>
             </div>
-            <div class="double-row">
-            <div class="year">
-              Year: {{ movie.year }}
-            </div>
-            <div class="genre">
-              Genre: {{ movie.genre }}
-            </div>
-            </div>
-            <!-- <div class="director">
-              Director: {{ movie.director }}
-            </div>       -->
+            <RouterLink :to="{ path: '/movies/' + movie._id + '/details' }">
+            <div class="name"><span class="link">{{ movie.name }}</span></div>
+          </RouterLink>
+            <div class="year"><span>{{ movie.year }}</span></div>
           </span>
         </span>
       </div>
@@ -66,47 +70,48 @@ export default {
   border: 0px solid #ddd;
   padding: 16px;
   border-radius: 8px;
-  text-align: center;
+  text-align: left;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-gap: 1rem;
-  margin-right: 175px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 1rem; 
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: auto;
+}
+
+.search-button {
+  width: 200px;
+  margin-left: 140px;
+}
+
+.search-title {
+  margin-left: 95px;
+  margin-bottom: 10px;
+}
+
+.link {
+  color: #FFF;
+}
+
+.link:hover {
+  color: orange;
 }
 
 .name {
-  font-size: 30px;
-  width: 200px;
-  margin-left: 210px;
+  font-size: 20px;
 }
 
-.image {
-  margin-left: 160px;
+.year {
+  font-size: 15px;
 }
 
-.image {
-  height: 200px;
-  width: 300px;
-}
-
-.genre {
-  display: flex;
-  flex-direction: row;
-  margin-left: 50px;
-  gap: 30px;
-}
-
-.double-row {
-  display: flex;
-  flex-direction: row;
-  margin-left: 170px;
-  gap: 30px;
-}
-
-.director {
-  display: flex;
-  text-align: center;
-  margin: auto;
-  width: 40%;
+.image-container {
+  width: 100%;
+  padding: 5px;
 }
 
 .movie-container {

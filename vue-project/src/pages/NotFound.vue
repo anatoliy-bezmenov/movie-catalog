@@ -29,12 +29,6 @@ export default {
     <h1>This is not the page you were looking for</h1>
     <p class="go-to"><span class="go-to-title">Go to:</span>
     <span class="rows1">
-    <router-link to="/login">
-        <div class="link">Login</div>
-    </router-link>
-    <router-link to="/register">
-        <div class="link">Register</div>
-    </router-link>
     <router-link to="/">
         <div class="link">Home</div>
     </router-link>
@@ -82,7 +76,7 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 50px;
-  margin-left: -205px;
+  margin-left: -100px;
   margin-top: 10px;
 }
 

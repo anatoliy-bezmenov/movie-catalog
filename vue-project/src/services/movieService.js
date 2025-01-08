@@ -99,3 +99,15 @@ export const saveMovieById = async (id, movieData, token) => {
     })
 };
 
+export const searchMovie = async (name) => {
+    const headerObject = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+    };
+
+    const response = await axios.get(url + `/movies/search`, 
+    { headers: headerObject, params: {q: name} } )
+    return new Promise((resolve, reject) => {
+        resolve(response.data)
+    })
+};

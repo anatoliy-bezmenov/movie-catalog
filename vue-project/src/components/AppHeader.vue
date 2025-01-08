@@ -17,6 +17,26 @@ export default {
 
 <template>
   <div class="header-container">
+    <span>
+      <router-link to="/">
+        <div class="link">Home</div>
+      </router-link>
+    </span>
+    <span>
+      <router-link to="/movies">
+        <div class="link">Movies</div>
+      </router-link>
+    </span>
+    <span>
+    <router-link to="/search">
+      <div class="link">Search</div>
+    </router-link>
+    </span>
+    <span v-if="this.$store.state.logged">
+      <router-link to="/movies/create">
+        <div class="link">Add Movie</div>
+      </router-link>
+    </span>
   <div v-if="this.$store.state.logged">
   <span>
     <router-link to="/logout">
@@ -39,26 +59,6 @@ export default {
     </router-link>
   </span>
   </div>
-    <span>
-      <router-link to="/">
-        <div class="link">Home</div>
-      </router-link>
-    </span>
-    <span>
-      <router-link to="/movies">
-        <div class="link">Movies</div>
-      </router-link>
-    </span>
-     <span v-if="this.$store.state.logged">
-      <router-link to="/movies/create">
-        <div class="link">Add Movie</div>
-      </router-link>
-    </span>
-    <span>
-    <router-link to="/search">
-      <div class="link">Search</div>
-    </router-link>
-    </span>
   </div>
 </template>
 
