@@ -40,7 +40,7 @@ export default {
 
 <template>
           <span class="image-container">
-           <img src="https://images4.alphacoders.com/119/1194463.jpg"> 
+           <img src="../assets/home.png"> 
           </span>
           <span class="home-container">
           <div class="body" v-if="!this.isGuest">

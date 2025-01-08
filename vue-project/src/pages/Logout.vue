@@ -22,7 +22,7 @@ export default {
 
 <template>
 <span class="image-container">
-  <img src="https://images3.alphacoders.com/674/674364.jpg"> 
+  <img src="../assets/logout.png"> 
 </span>
 <div class="logout-container">
     <h1>Successfully logged out</h1>
@@ -33,6 +33,9 @@ export default {
     </router-link>
     <router-link to="/register">
         <div class="link">Register</div>
+    </router-link>
+    <router-link to="/">
+        <div class="link">Home</div>
     </router-link>
     <router-link to="/movies">
         <div class="link">Movies</div>
@@ -78,7 +81,7 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 50px;
-  margin-left: -175px;
+  margin-left: -205px;
   margin-top: 10px;
 }
 
@@ -86,6 +89,12 @@ h1 {
   margin-bottom: 50px;
   margin-left: 50px;
   width: 600px;
+  color: #FFF;
+}
+
+.link {
+  color: rgb(255, 140, 0);
+  cursor: pointer;
 }
 
 h2 {
@@ -108,19 +117,8 @@ input {
   border-radius: 4px;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
+.link:hover {
+  color: #FFF;
 }
 
 .error {
