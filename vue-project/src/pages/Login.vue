@@ -38,7 +38,7 @@ export default {
         .then((response) => {
           setDataToStorage(response);
           this.$store.state.logged = true;
-          this.$router.push('/movies');
+          this.$router.push('/');
         })
         .catch((error) => {
           this.errors.credentials = "The requested user could not be found.";
@@ -121,7 +121,7 @@ export default {
 
 .signup {
   font-size: 18px;
-  margin-left: 3px;
+  margin-left: 18px;
 }
 
 h2 {

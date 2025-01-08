@@ -11,11 +11,6 @@ export default {
   created() {
   },
   methods: {
-    // get username() {
-    //   let parsedUser = {name: ''};
-    //   parsedUser = JSON.parse(getUser());
-    //   return parsedUser?.name;
-    // },
   },
 }
 </script>
@@ -24,7 +19,6 @@ export default {
   <div class="header-container">
   <div v-if="this.$store.state.logged">
   <span>
-  <!-- <div>Greetings, {{username}}</div> -->
     <router-link to="/logout">
       <div class="link">Logout</div>
     </router-link>
@@ -61,7 +55,7 @@ export default {
       </router-link>
     </span>
     <span>
-    <router-link to="/movies">
+    <router-link to="/search">
       <div class="link">Search</div>
     </router-link>
     </span>

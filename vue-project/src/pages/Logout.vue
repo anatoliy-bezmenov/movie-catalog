@@ -21,31 +21,71 @@ export default {
 </script>
 
 <template>
+<span class="image-container">
+  <img src="https://images3.alphacoders.com/674/674364.jpg"> 
+</span>
+<div class="logout-container">
     <h1>Successfully logged out</h1>
-    <p>Go to
-    <router-link to="/movies">
-        <span class="link">Movies</span>
-    </router-link>
-    </p>
+    <p class="go-to"><span class="go-to-title">Go to:</span>
+    <span class="rows1">
     <router-link to="/login">
         <div class="link">Login</div>
     </router-link>
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    <router-link to="/register">
+        <div class="link">Register</div>
+    </router-link>
+    <router-link to="/movies">
+        <div class="link">Movies</div>
+    </router-link>
+    <router-link to="/search">
+        <div class="link">Search</div>
+    </router-link>
+    </span>
+    </p>
+</div>
 </template>
 
 <style scoped>
-.login-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+
+.image-container > img {
+  z-index: -1;
+  display: flex;
+  margin-bottom: -850px;
+  height: 100vh;
+  width: 1920px;
 }
 
-.form-group {
-  margin-bottom: 15px;
+.logout-container {
+  display: flex;
+  margin: auto;
+  width: 500px;
+  flex-direction: column;
+  margin-top: -50px;
+}
+
+.go-to {
+  margin-left: 225px;
+  margin-top: -25px;
+  margin-bottom: 650px;
+}
+
+.go-to-title {
+  color: #FFF;
+  font-size: 30px;
+}
+
+.rows1 {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  margin-left: -175px;
+  margin-top: 10px;
+}
+
+h1 {
+  margin-bottom: 50px;
+  margin-left: 50px;
+  width: 600px;
 }
 
 h2 {

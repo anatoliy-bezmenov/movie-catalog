@@ -52,9 +52,9 @@ export default {
               Genre: {{ movie.genre }}
             </div>
             </div>
-            <div class="director">
+            <!-- <div class="director">
               Director: {{ movie.director }}
-            </div>      
+            </div>       -->
           </span>
         </span>
       </div>
@@ -67,8 +67,9 @@ export default {
   border-radius: 8px;
   text-align: center;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 1rem;
+  margin-right: 175px;
 }
 
 .name {
@@ -82,14 +83,21 @@ export default {
 }
 
 .image {
-  height: 400px;
+  height: 200px;
   width: 300px;
+}
+
+.genre {
+  display: flex;
+  flex-direction: row;
+  margin-left: 50px;
+  gap: 30px;
 }
 
 .double-row {
   display: flex;
   flex-direction: row;
-  margin-left: 190px;
+  margin-left: 170px;
   gap: 30px;
 }
 
