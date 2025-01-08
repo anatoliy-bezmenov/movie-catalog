@@ -52,7 +52,7 @@ export default {
           };
           setDataToStorage(response);
           this.$store.state.logged = true;
-          this.$router.push('/movies');
+          this.$router.push('/');
         })
         .catch((error) => {
           this.errors.credentials = "Invalid email address.";
