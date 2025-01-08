@@ -35,7 +35,7 @@ export default {
 </script>
 
 <template>
-  <div class="grid">
+  <div class="grid" v-if="this.movies[0]">
         <span v-for="movie in movies">
             <span class="movie-container">
             <div class="image-container">
@@ -50,6 +50,10 @@ export default {
           </span>
         </span>
       </div>
+
+      <div v-if="!this.movies[0]">
+      <h1 class="no-movies">No movies found!</h1>
+      </div>
 </template>
 
 <style scoped>
@@ -61,7 +65,15 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 1rem;
-  
+}
+
+.no-movies {
+  margin: auto;
+  display: flex;
+  width: 50%;
+  margin-top: 50px;
+  margin-left: 800px;
+  margin-bottom: 400px;
 }
 
 .link {
@@ -88,5 +100,6 @@ export default {
 .movie-container {
   display: flex;
   flex-direction: column;
+  margin-bottom: -20px;
 }
 </style>
