@@ -6,7 +6,6 @@ export default {
   data() {
     return {
       movies: [],
-      loading: false,
       errors: [],
       token: getToken(),
     };
