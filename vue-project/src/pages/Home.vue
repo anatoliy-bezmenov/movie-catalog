@@ -1,5 +1,4 @@
 <script>
-import { getMovies, getMovieByIdNoUser, getMovieById, deleteMovieById } from '../services/movieService';
 import { getToken, getUser } from '../services/authService';
 
 export default {
@@ -12,9 +11,10 @@ export default {
       user: '',
       parsedUser: '',
       isGuest: true,
+      showText: false,
     };
   },
-  created() {
+  mounted() {
     this.user = getUser();
     this.token = getToken();
     if (this.user) {
@@ -30,10 +30,10 @@ export default {
     } else {
       this.$store.state.logged = true;
     };
+    this.showText = true;
   },
   methods: {
-    // fetchMovies() {
-    // },
+    
   },
 };
 </script>
@@ -44,17 +44,19 @@ export default {
           </span>
           <span class="home-container">
           <div class="body" v-if="!this.isGuest">
-          <h1>Welcome Home, {{ this.parsedUser.name }}</h1>
+          <h1 class="welcome">Welcome, {{ this.parsedUser.name }}</h1>
           </div>
 
           <div class="body" v-else>
           <h1></h1>
           </div>
 
-          <div class="main">
+          <transition name="fade">
+          <div v-if="showText" class="main">
           <div class="main-title">This website is all about movies!</div>
           <div class="main-body">You can browse movies, read detailed information about them and add new movies to the catalog.</div>
           </div>
+          </transition>
         </span>
 </template>
 
@@ -84,8 +86,10 @@ export default {
     margin-top: -375px;
 }
 
-.body > h1 {
+.welcome {
     width: 900px;
+    color: #FFF;
+    margin-left: 50px;
 }
 
 .image-container > img {
@@ -96,7 +100,13 @@ export default {
   width: 1920px;
 }
 
-h1 {
-    color: #FFF;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-text {
+  color: #FFF;
 }
 </style>

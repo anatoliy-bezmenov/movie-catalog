@@ -286,7 +286,7 @@ export default {
         />
         <p v-if="errors.description" class="error">{{ errors.description }}</p>
       </div>
-      <button type="submit" :disabled="isFormInvalid">Add Movie</button>
+      <button class="add-movie-button" type="submit" :disabled="isFormInvalid">Add Movie</button>
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
@@ -305,6 +305,11 @@ export default {
 
 .form-group {
   margin-bottom: 15px;
+}
+
+.add-movie-button:hover {
+  color: black;
+  background-color: orange;
 }
 
 h2 {

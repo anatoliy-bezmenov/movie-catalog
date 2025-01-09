@@ -6,9 +6,11 @@ export default {
   data() {
     return {
       token: getToken(),
+      showText: false,
     };
   },
-  created() {
+  mounted() {
+    this.showText = true;
     if (!this.token) {
       this.$router.push('/movies');
     };
@@ -27,7 +29,8 @@ export default {
 <div class="logout-container">
     <h1>Successfully logged out</h1>
     <p class="go-to"><span class="go-to-title">Go to:</span>
-    <span class="rows1">
+    <transition name="fade">
+    <span v-if="showText" class="rows1">
     <router-link to="/login">
         <div class="link">Login</div>
     </router-link>
@@ -44,6 +47,7 @@ export default {
         <div class="link">Search</div>
     </router-link>
     </span>
+    </transition>
     </p>
 </div>
 </template>
@@ -126,4 +130,13 @@ input {
   margin-top: 10px;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-text {
+  color: #FFF;
+}
 </style>

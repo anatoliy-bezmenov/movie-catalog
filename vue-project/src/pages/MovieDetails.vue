@@ -168,6 +168,20 @@ export default {
   margin-top: 20px;
 }
 
+.backToMovies:hover {
+  color: black;
+  background-color: orange;
+}
+
+.editMovie:hover {
+  color: black;
+  background-color: orange;
+}
+
+.deleteMovie:hover {
+  color: black;
+}
+
 .image {
   margin-left: 160px;
   height: 600px;

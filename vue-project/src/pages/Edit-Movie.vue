@@ -381,7 +381,8 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  color: black;
+  background-color: orange;
 }
 
 .error {

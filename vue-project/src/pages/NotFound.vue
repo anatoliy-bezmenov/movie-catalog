@@ -4,9 +4,11 @@ import { getToken, getUser } from '../services/authService';
 export default {
   data() {
     return {
+      showText: false,
     };
   },
-  created() {
+  mounted() {
+    this.showText = true;
     this.id = this.$route.params.movieId
     this.token = getToken();
     if (!this.token) {
@@ -28,7 +30,8 @@ export default {
 <div class="not-found-container">
     <h1>This is not the page you were looking for</h1>
     <p class="go-to"><span class="go-to-title">Go to:</span>
-    <span class="rows1">
+    <transition name="fade">
+    <span v-if="showText" class="rows1">
     <router-link to="/">
         <div class="link">Home</div>
     </router-link>
@@ -39,6 +42,7 @@ export default {
         <div class="link">Search</div>
     </router-link>
     </span>
+    </transition>
     </p>
 </div>
 </template>
@@ -121,4 +125,13 @@ input {
   margin-top: 10px;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-text {
+  color: #FFF;
+}
 </style>
