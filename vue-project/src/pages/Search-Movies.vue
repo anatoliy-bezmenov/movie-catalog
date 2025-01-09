@@ -36,6 +36,9 @@ export default {
         this.movies = response;
       })
     },
+    clearSearch() {
+      this.movieName = "";
+    }
   },
 };
 </script>
@@ -44,7 +47,12 @@ export default {
 <div class="search-container">
   <h1 class="search-title">Search by name</h1>
     <input v-model="movieName" @keyup.enter="fetchGameByName()" type="text" :min="1" :max="30" />
+    <div class="search-buttons">
     <button class="search-button" @click="fetchGameByName()">Search</button>
+    <button @click="clearSearch()" class="clear-search">
+    <span>Clear Search</span>
+    </button>
+    </div>
 </div>
     <div class="grid" v-if="this.movies[0]">
         <span v-for="movie in movies">
@@ -78,6 +86,23 @@ export default {
   grid-gap: 1rem; 
 }
 
+.search-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.clear-search {
+  background-color: rgb(8,116,172);
+  border-color: #1c1c1e;
+  width: 200px;
+  margin-left: 20px;
+}
+
+.clear-search:hover {
+  color: black;
+  background-color: red;
+}
+
 .no-movies {
   margin: auto;
   display: flex;
@@ -96,7 +121,7 @@ export default {
 
 .search-button {
   width: 200px;
-  margin-left: 140px;
+  margin-left: 35px;
 }
 
 .search-button:hover {
