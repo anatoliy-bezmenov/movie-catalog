@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <div class="footer-container"><span class="footer">Movie Catalog 2025</span></div>
 </template>

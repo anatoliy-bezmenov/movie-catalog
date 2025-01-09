@@ -1,8 +1,4 @@
 <script>
-import useVuelidate from '@vuelidate/core';
-// import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
-// import { reactive } from "vue";
-// import { setDataToStorage } from '../services/authService';
 import { createMemoryHistory, createRouter } from 'vue-router';
 import { getMovieById, saveMovieById, getMovieByIdNoUser } from '../services/movieService';
 import { getToken, getUser } from '../services/authService';

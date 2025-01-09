@@ -8,7 +8,6 @@ export default {
       movies: [],
       loading: false,
       errors: [],
-      movie: {},
       token: getToken(),
     };
   },

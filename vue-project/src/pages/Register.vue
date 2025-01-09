@@ -1,7 +1,4 @@
 <script>
-// import useVuelidate from '@vuelidate/core';
-// import { email, helpers, maxLength, minLength, required } from '@vuelidate/validators';
-// import { createMemoryHistory, createRouter } from 'vue-router'
 import { register} from '../services/userService';
 import { setDataToStorage, getToken } from '../services/authService';
 
@@ -233,5 +230,4 @@ button:hover {
   color: red;
   margin-top: 10px;
 }
-
 </style>

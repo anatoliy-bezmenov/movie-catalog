@@ -4,9 +4,6 @@ import { getToken, getUser } from '../services/authService';
 export default {
   data() {
     return {
-      movies: [],
-      errors: [],
-      movie: {},
       token: '',
       user: '',
       parsedUser: '',
@@ -31,9 +28,6 @@ export default {
       this.$store.state.logged = true;
     };
     this.showText = true;
-  },
-  methods: {
-    
   },
 };
 </script>
@@ -67,10 +61,6 @@ export default {
   margin: auto;
   width: 40%;
   margin-bottom: 475px;
-}
-
-.main-title {
-    margin-bottom: 20px;
 }
 
 .main {

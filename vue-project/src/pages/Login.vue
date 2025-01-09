@@ -155,10 +155,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
 h2, label, p {
   color: #fff;
 }
@@ -180,5 +176,4 @@ h2, label, p {
   color: red;
   margin-top: 10px;
 }
-
 </style>

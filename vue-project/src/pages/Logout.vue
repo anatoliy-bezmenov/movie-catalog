@@ -17,8 +17,6 @@ export default {
     removeToken();
     this.$store.state.logged = false;
   },
-  methods: {
-  },
 };
 </script>
 
@@ -53,7 +51,6 @@ export default {
 </template>
 
 <style scoped>
-
 .image-container > img {
   z-index: -1;
   display: flex;
@@ -101,33 +98,8 @@ h1 {
   cursor: pointer;
 }
 
-h2 {
-    display: flex;
-    margin: auto;
-    width: 100px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 .link:hover {
   color: #FFF;
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
 }
 
 .fade-enter-active, .fade-leave-active {

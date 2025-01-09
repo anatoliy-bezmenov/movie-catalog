@@ -1,20 +1,3 @@
-<script>
-import { getUser } from '../services/authService';
-import { store } from '../store/store';
-
-export default {
-  
-  data() {
-    return {
-    };
-  },
-  created() {
-  },
-  methods: {
-  },
-}
-</script>
-
 <template>
   <div class="header-container">
     <span>

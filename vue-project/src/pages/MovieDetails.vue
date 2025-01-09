@@ -193,7 +193,6 @@ export default {
   display: flex;
   flex-direction: row;
   margin-left: 160px;
-
   margin-bottom: 10px;
   width: 500px;
   justify-content: space-between;
