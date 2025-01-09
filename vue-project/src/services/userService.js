@@ -21,7 +21,7 @@ export const login = async (email, password) => {
       })
       .catch((ex) => {
         reject(ex);
-      })
+      });
   });
 };
 
@@ -46,6 +46,6 @@ export const register = async (email, name, password, rePassword) => {
     })
     .catch((ex) => {
       reject(ex);
-    })
+    });
   })
 };

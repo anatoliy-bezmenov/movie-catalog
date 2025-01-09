@@ -1,24 +1,9 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
-import { createStore } from 'vuex';
 import App from './App.vue';
 import router from './config/router';
+import { store } from './store/store';
 import './styles/reset.css';
-
-const store = createStore({
-    modules: {
-
-    },
-    state: {
-        logged: false,
-    },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-});
 
 const pinia = createPinia();
 const app = createApp(App);

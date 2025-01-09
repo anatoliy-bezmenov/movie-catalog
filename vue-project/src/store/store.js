@@ -1,5 +1,16 @@
-import { reactive } from 'vue';
+import { createStore } from 'vuex';
 
-export const store = reactive({
-    isLoggedIn: false,
+export const store = createStore({
+    modules: {
+
+    },
+    state: {
+        logged: false,
+    },
+    getters: {
+
+    },
+    mutations: {
+
+    },
 });

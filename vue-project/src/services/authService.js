@@ -25,6 +25,6 @@ export const isLoggedIn = () => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token && token.length > 0) {
         return true;
-    }
+    };
     return false;
 };
