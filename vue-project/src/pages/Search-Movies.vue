@@ -30,7 +30,7 @@ export default {
           this.errors.push('Cannot fetch data');
         });
     },
-    fetchGameByName() {
+    fetchMovieByName() {
       searchMovie(this.movieName)
       .then((response) => {
         this.movies = response;
@@ -46,9 +46,9 @@ export default {
 <template>
 <div class="search-container">
   <h1 class="search-title">Search by name</h1>
-    <input v-model="movieName" @keyup.enter="fetchGameByName()" type="text" :min="1" :max="30" />
+    <input v-model="movieName" @keyup.enter="fetchMovieByName()" type="text" :min="1" :max="30" />
     <div class="search-buttons">
-    <button class="search-button" @click="fetchGameByName()">Search</button>
+    <button class="search-button" @click="fetchMovieByName()">Search</button>
     <button @click="clearSearch()" class="clear-search">
     <span>Clear Search</span>
     </button>
