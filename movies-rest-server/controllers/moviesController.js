@@ -25,8 +25,13 @@ router.post("/create", isAuth, async (req, res) => {
 
 router.get("/search", async (req, res) => {
   const query = req.query.q
-  const data = await moviesService.search(query)
-  res.json(data);
+  try {
+    const data = await moviesService.search(query)
+    res.json(data);
+  } catch (err) {
+    res.status(404).json({ error: getErrorMessage(err) });
+  }
+  
 })
 
 router.get("/:moviesId/edit", isAuth,  isMoviesOwner, async (req, res) => {
